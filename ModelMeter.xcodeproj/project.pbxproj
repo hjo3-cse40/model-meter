@@ -16,6 +16,7 @@
 		A10000000000000000000007 /* UsageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000017 /* UsageModel.swift */; };
 		A10000000000000000000008 /* CodexUsageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000018 /* CodexUsageClient.swift */; };
 		A10000000000000000000009 /* AntigravityUsageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000019 /* AntigravityUsageClient.swift */; };
+		A1000000000000000000000A /* CursorUsageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000001A /* CursorUsageClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		A10000000000000000000017 /* UsageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageModel.swift; sourceTree = "<group>"; };
 		A10000000000000000000018 /* CodexUsageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodexUsageClient.swift; sourceTree = "<group>"; };
 		A10000000000000000000019 /* AntigravityUsageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AntigravityUsageClient.swift; sourceTree = "<group>"; };
+		A1000000000000000000001A /* CursorUsageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursorUsageClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 				A10000000000000000000017 /* UsageModel.swift */,
 				A10000000000000000000018 /* CodexUsageClient.swift */,
 				A10000000000000000000019 /* AntigravityUsageClient.swift */,
+				A1000000000000000000001A /* CursorUsageClient.swift */,
 				A10000000000000000000012 /* MemoryMonitor.swift */,
 				A10000000000000000000013 /* MemoryBarView.swift */,
 				A10000000000000000000014 /* ProcessMemory.swift */,
@@ -142,6 +145,7 @@
 				A10000000000000000000007 /* UsageModel.swift in Sources */,
 				A10000000000000000000008 /* CodexUsageClient.swift in Sources */,
 				A10000000000000000000009 /* AntigravityUsageClient.swift in Sources */,
+				A1000000000000000000000A /* CursorUsageClient.swift in Sources */,
 				A10000000000000000000002 /* MemoryMonitor.swift in Sources */,
 				A10000000000000000000003 /* MemoryBarView.swift in Sources */,
 				A10000000000000000000004 /* ProcessMemory.swift in Sources */,

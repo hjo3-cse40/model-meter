@@ -84,10 +84,12 @@ final class UsageViewModel: ObservableObject {
 
         async let codexTask = Self.fetchCodex()
         async let antigravityTask = Self.fetchAntigravity()
+        async let cursorTask = Self.fetchCursor()
         let codexLimits = await codexTask
         let antigravityLimits = await antigravityTask
-        providers = Self.providers(codex: codexLimits, antigravity: antigravityLimits)
-        if !codexLimits.isEmpty || !antigravityLimits.isEmpty { lastUpdated = Date() }
+        let cursorLimits = await cursorTask
+        providers = Self.providers(codex: codexLimits, antigravity: antigravityLimits, cursor: cursorLimits)
+        if !codexLimits.isEmpty || !antigravityLimits.isEmpty || !cursorLimits.isEmpty { lastUpdated = Date() }
     }
 
     private static func fetchCodex() async -> [CodexLimit] {
@@ -98,17 +100,24 @@ final class UsageViewModel: ObservableObject {
         (try? await AntigravityUsageClient().fetch()) ?? []
     }
 
-    private static func providers(codex: [CodexLimit], antigravity: [AntigravityLimit]) -> [ProviderUsage] {
+    private static func fetchCursor() async -> [CursorLimit] {
+        (try? await CursorUsageClient().fetch()) ?? []
+    }
+
+    private static func providers(codex: [CodexLimit], antigravity: [AntigravityLimit], cursor: [CursorLimit]) -> [ProviderUsage] {
         let codexWindows = codex.map { limit in
             UsageWindow(name: limit.name, remaining: max(0, 1 - limit.usedPercent / 100), resetDate: limit.resetDate, detail: nil, tint: .teal)
         }
         let agWindows = antigravity.map { limit in
             UsageWindow(name: "\(limit.groupName) · \(limit.name)", remaining: limit.remaining, resetDate: limit.resetDate, detail: nil, tint: .purple)
         }
+        let cursorWindows = cursor.map { limit in
+            UsageWindow(name: limit.name, remaining: max(0, 1 - limit.usedPercent / 100), resetDate: limit.resetDate, detail: nil, tint: .blue)
+        }
         let allProviders = [
             ProviderUsage(id: .codex, name: ProviderKind.codex.rawValue, color: .teal, windows: codexWindows.isEmpty ? unavailableWindows("Usage unavailable") : codexWindows, status: codexWindows.isEmpty ? "Usage unavailable" : "Connected"),
             unavailable(kind: .claude),
-            unavailable(kind: .cursor, status: "Dashboard only"),
+            ProviderUsage(id: .cursor, name: ProviderKind.cursor.rawValue, color: .blue, windows: cursorWindows.isEmpty ? unavailableWindows("Open Cursor Spending page") : cursorWindows, status: cursorWindows.isEmpty ? "Dashboard only" : "Connected"),
             ProviderUsage(id: .antigravity, name: ProviderKind.antigravity.rawValue, color: .purple, windows: agWindows.isEmpty ? unavailableWindows(AntigravityUsageClient.isInstalled ? "Usage unavailable" : "Install agy CLI") : agWindows, status: agWindows.isEmpty ? "Usage unavailable" : "Connected")
         ]
         return allProviders.enumerated().sorted { lhs, rhs in
