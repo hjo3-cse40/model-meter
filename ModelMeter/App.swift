@@ -1,4 +1,3 @@
-import AppKit
 import ServiceManagement
 import SwiftUI
 
@@ -75,7 +74,7 @@ struct ProviderCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Circle().fill(provider.color).frame(width: 8, height: 8)
+                ProviderLogo(kind: provider.id, color: provider.color)
                 Text(provider.name).font(.headline)
                 Spacer()
                 Text(provider.summary).font(.caption.weight(.medium)).foregroundStyle(.secondary)
@@ -94,19 +93,41 @@ struct ProviderCard: View {
                 }
             }
 
-            if provider.id == .cursor {
-                Button("Open Cursor usage dashboard") {
-                    if let url = URL(string: "https://cursor.com/dashboard") {
-                        NSWorkspace.shared.open(url)
-                    }
-                }
-                .buttonStyle(.link)
-                .font(.caption)
-            }
         }
         .padding(10)
         .background(.quaternary.opacity(0.35), in: RoundedRectangle(cornerRadius: 9, style: .continuous))
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(provider.name), \(provider.summary)")
+    }
+}
+
+/// Compact provider marks for the popover. These deliberately do not appear in
+/// the status item's label: that label is kept narrow so it remains useful when
+/// macOS needs menu-bar space for system indicators such as microphone access.
+struct ProviderLogo: View {
+    let kind: ProviderKind
+    let color: Color
+
+    private var assetName: String {
+        switch kind {
+        case .codex: "ProviderCodex"
+        case .cursor: "ProviderCursor"
+        case .antigravity: "ProviderGemini"
+        case .claude: "ProviderClaude"
+        }
+    }
+
+    var body: some View {
+        Image(assetName)
+            .resizable()
+            .renderingMode(kind == .codex ? .template : .original)
+            .foregroundStyle(color)
+            .scaledToFit()
+            .padding(3)
+            .frame(width: 22, height: 22)
+            // The card combines its children into one useful provider-and-usage
+            // announcement, so exposing this decorative mark separately would
+            // make VoiceOver repeat the provider name.
+            .accessibilityHidden(true)
     }
 }
