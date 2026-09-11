@@ -93,6 +93,16 @@ struct ProviderCard: View {
                     Text(window.resetText).font(.caption2).foregroundStyle(.secondary)
                 }
             }
+
+            if provider.id == .cursor {
+                Button("Open Cursor usage dashboard") {
+                    if let url = URL(string: "https://cursor.com/dashboard") {
+                        NSWorkspace.shared.open(url)
+                    }
+                }
+                .buttonStyle(.link)
+                .font(.caption)
+            }
         }
         .padding(10)
         .background(.quaternary.opacity(0.35), in: RoundedRectangle(cornerRadius: 9, style: .continuous))

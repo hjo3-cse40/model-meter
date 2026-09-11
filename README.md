@@ -2,7 +2,7 @@
 
 Native macOS menu bar prototype for monitoring AI model usage.
 
-The prototype reads OpenAI Codex limits through the local Codex app-server and Antigravity quotas through the authenticated `agy` CLI. Claude and Cursor remain visible as explicit not-connected states until their usage sources are available.
+The prototype reads OpenAI Codex limits through the local Codex app-server and Antigravity quotas through the authenticated `agy` CLI. Claude remains not connected. Cursor is dashboard-based and has a direct link to its official usage dashboard because personal usage is not exposed through the local CLI.
 
 ## Run in Xcode
 

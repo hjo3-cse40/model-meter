@@ -108,7 +108,7 @@ final class UsageViewModel: ObservableObject {
         let allProviders = [
             ProviderUsage(id: .codex, name: ProviderKind.codex.rawValue, color: .teal, windows: codexWindows.isEmpty ? unavailableWindows("Usage unavailable") : codexWindows, status: codexWindows.isEmpty ? "Usage unavailable" : "Connected"),
             unavailable(kind: .claude),
-            unavailable(kind: .cursor),
+            unavailable(kind: .cursor, status: "Dashboard only"),
             ProviderUsage(id: .antigravity, name: ProviderKind.antigravity.rawValue, color: .purple, windows: agWindows.isEmpty ? unavailableWindows(AntigravityUsageClient.isInstalled ? "Usage unavailable" : "Install agy CLI") : agWindows, status: agWindows.isEmpty ? "Usage unavailable" : "Connected")
         ]
         return allProviders.enumerated().sorted { lhs, rhs in
@@ -120,7 +120,7 @@ final class UsageViewModel: ObservableObject {
     }
 
     private static func unavailableProviders() -> [ProviderUsage] {
-        [unavailable(kind: .codex, status: "Connecting…"), unavailable(kind: .claude), unavailable(kind: .cursor), unavailable(kind: .antigravity)]
+        [unavailable(kind: .codex, status: "Connecting…"), unavailable(kind: .claude), unavailable(kind: .cursor, status: "Dashboard only"), unavailable(kind: .antigravity)]
     }
 
     private static func unavailable(kind: ProviderKind, status: String = "Not connected") -> ProviderUsage {
